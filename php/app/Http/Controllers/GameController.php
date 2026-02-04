@@ -38,7 +38,7 @@ class GameController extends Controller
 
     public function edit(Game $game)
     {
-        if ($game->user_id !== Auth::id()) {
+        if ($game->user_id !== Auth::id() && ! Auth::user()->is_admin) {
             abort(403);
         }
 
@@ -47,7 +47,7 @@ class GameController extends Controller
 
     public function update(Request $request, Game $game)
     {
-        if ($game->user_id !== Auth::id()) {
+        if ($game->user_id !== Auth::id() && ! Auth::user()->is_admin) {
             abort(403);
         }
 
@@ -64,7 +64,7 @@ class GameController extends Controller
 
     public function destroy(Game $game)
     {
-        if ($game->user_id !== Auth::id()) {
+        if ($game->user_id !== Auth::id() && ! Auth::user()->is_admin) {
             abort(403);
         }
 

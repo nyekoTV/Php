@@ -14,4 +14,8 @@ class Game extends Model
         'description',
         'release_date',
     ];
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

@@ -18,7 +18,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
 
     // CRUD des jeux
-    Route::resource('games', GameController::class);
+    Route::resource('games', GameController::class)
+    ->except(['index', 'show']);
+
 
     // Profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

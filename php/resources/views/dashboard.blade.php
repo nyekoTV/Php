@@ -46,7 +46,9 @@
                         </p>
 
                         {{-- ACTIONS : SEULEMENT POUR LE PROPRIÉTAIRE --}}
-                        @if ($game->user_id === auth()->id())
+                        @if ($game->user_id === auth()->id() || auth()->user()->is_admin)
+
+
                             <div class="mt-4 flex gap-3">
 
                                 <a href="{{ route('games.edit', $game) }}"
@@ -74,6 +76,10 @@
                         Aucun jeu pour le moment.
                     </p>
                 @endforelse
+                <div class="mt-6">
+    {{ $games->links() }}
+</div>
+
 
             </div>
 

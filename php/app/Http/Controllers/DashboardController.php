@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard', [
-            'games' => Game::latest()->get(),
+            'games' => Game::latest()->paginate(5),
             'gamesCount' => Game::count(),
             'usersCount' => User::count(),
         ]);
