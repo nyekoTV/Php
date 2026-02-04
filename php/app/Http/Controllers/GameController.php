@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Game;
 use Illuminate\Http\Request;
 
@@ -19,21 +20,23 @@ class GameController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required',
-            'release_date' => 'required|date',
-        ]);
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required',
+        'release_date' => 'required|date',
+    ]);
 
-        Game::create($request->only([
-            'title',
-            'description',
-            'release_date',
-        ]));
+    Game::create([
+        'title' => $validated['title'],
+        'description' => $validated['description'],
+        'release_date' => $validated['release_date'],
+        'user_id' => Auth::id(), // 👈 LIGNE CLÉ
+    ]);
 
-        return redirect()->route('games.index');
-    }
+    return redirect()->route('dashboard');
+}
+
 
     public function edit(Game $game)
     {
