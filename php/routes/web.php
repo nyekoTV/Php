@@ -8,5 +8,5 @@ Route::get('/', function () {
 });
 
 Route::resource('games', GameController::class)->only([
-    'index', 'create', 'store'
+    'index', 'create', 'store', 'edit', 'update', 'destroy'
 ]);

@@ -15,9 +15,19 @@
         <li>
             <strong>{{ $game->title }}</strong><br>
             {{ $game->description }}<br>
-            Sortie : {{ $game->release_date }}
+            Sortie : {{ $game->release_date }}<br><br>
+
+            <a href="{{ route('games.edit', $game) }}">Modifier</a>
+
+            <form method="POST" action="{{ route('games.destroy', $game) }}" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Supprimer</button>
+            </form>
         </li>
+        <hr>
     @endforeach
 </ul>
+
 </body>
 </html>
