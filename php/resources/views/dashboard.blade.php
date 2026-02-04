@@ -31,7 +31,7 @@
                 </a>
 
                 @forelse ($games as $game)
-                    <div class="border rounded p-4 mb-4 dark:border-gray-700">
+                    <div class="border rounded p-4 mb-6 dark:border-gray-700">
 
                         <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
                             {{ $game->title }}
@@ -45,12 +45,9 @@
                             Sortie : {{ $game->release_date }}
                         </p>
 
-                        {{-- ACTIONS : SEULEMENT POUR LE PROPRIÉTAIRE --}}
+                        {{-- ACTIONS : PROPRIÉTAIRE OU ADMIN --}}
                         @if ($game->user_id === auth()->id() || auth()->user()->is_admin)
-
-
                             <div class="mt-4 flex gap-3">
-
                                 <a href="{{ route('games.edit', $game) }}"
                                    class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                                     Modifier
@@ -66,9 +63,49 @@
                                         Supprimer
                                     </button>
                                 </form>
-
                             </div>
                         @endif
+
+                        {{-- COMMENTS --}}
+                        <div class="mt-6 border-t pt-4 dark:border-gray-600">
+                            <h5 class="font-semibold text-sm text-gray-300">
+                                Commentaires
+                            </h5>
+
+                            @foreach ($game->comments as $comment)
+                                <div class="text-sm text-gray-400 mt-2">
+                                    <strong>{{ $comment->user->name }}</strong> :
+                                    {{ $comment->content }}
+
+                                    @if ($comment->user_id === auth()->id() || auth()->user()->is_admin)
+                                        <form method="POST"
+                                              action="{{ route('comments.destroy', $comment) }}"
+                                              class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="text-red-500 ml-2">
+                                                Supprimer
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endforeach
+
+                            {{-- ADD COMMENT --}}
+                            <form method="POST"
+                                  action="{{ route('comments.store', $game) }}"
+                                  class="mt-3">
+                                @csrf
+                                <input type="text"
+                                       name="content"
+                                       class="w-full rounded bg-gray-700 text-white p-2"
+                                       placeholder="Ajouter un commentaire">
+                                <button
+                                    class="mt-2 px-3 py-1 bg-blue-600 text-white rounded">
+                                    Envoyer
+                                </button>
+                            </form>
+                        </div>
 
                     </div>
                 @empty
@@ -76,10 +113,11 @@
                         Aucun jeu pour le moment.
                     </p>
                 @endforelse
-                <div class="mt-6">
-    {{ $games->links() }}
-</div>
 
+                {{-- PAGINATION --}}
+                <div class="mt-6">
+                    {{ $games->links() }}
+                </div>
 
             </div>
 
