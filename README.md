@@ -135,11 +135,3 @@ Dans le cadre d’un apprentissage Laravel / PHP MVC
 
 ---
 
-Si tu veux, au prochain message je peux :
-
-* 🔒 te proposer une version **avec Policy Laravel (niveau avancé)**
-* 🎨 améliorer l’UI (badges admin, icônes, pagination)
-* 🧪 ajouter des tests
-* 📦 préparer le projet pour un rendu GitHub parfait (README + commits finaux)
-
-Dis-moi 👇
