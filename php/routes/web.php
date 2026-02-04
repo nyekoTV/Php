@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GameController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('games.index');
 });
+
+Route::resource('games', GameController::class)->only([
+    'index', 'create', 'store'
+]);
