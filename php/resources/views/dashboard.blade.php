@@ -14,16 +14,19 @@
                     Liste des jeux
                 </h3>
 
-                {{-- STATS --}}
-                <div class="flex gap-4 mb-6">
-                    <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                        Jeux : <strong>{{ $gamesCount }}</strong>
-                    </div>
+                {{-- STATS (ADMIN ONLY) --}}
+@if(auth()->user()->is_admin)
+    <div class="flex gap-4 mb-6">
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+            Jeux : <strong>{{ $gamesCount }}</strong>
+        </div>
 
-                    <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
-                        Utilisateurs : <strong>{{ $usersCount }}</strong>
-                    </div>
-                </div>
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+            Utilisateurs : <strong>{{ $usersCount }}</strong>
+        </div>
+    </div>
+@endif
+
 
                 <a href="{{ route('games.create') }}"
                    class="inline-block mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
