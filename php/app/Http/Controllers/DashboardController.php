@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $games = Game::all();
-        return view('dashboard', compact('games'));
+        return view('dashboard', [
+            'games' => Game::latest()->get(),
+            'gamesCount' => Game::count(),
+            'usersCount' => User::count(),
+        ]);
     }
 }

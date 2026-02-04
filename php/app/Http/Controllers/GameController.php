@@ -5,16 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class GameController extends Controller
 {
-    use AuthorizesRequests; // ✅ LIGNE CLÉ (OBLIGATOIRE)
-
     public function index()
     {
-        $games = Game::all();
-        return view('games.index', compact('games'));
+        return redirect()->route('dashboard');
     }
 
     public function create()
@@ -34,7 +30,7 @@ class GameController extends Controller
             'title' => $validated['title'],
             'description' => $validated['description'],
             'release_date' => $validated['release_date'],
-            'user_id' => Auth::id(), // 🔐 propriétaire
+            'user_id' => Auth::id(),
         ]);
 
         return redirect()->route('dashboard');
@@ -42,14 +38,18 @@ class GameController extends Controller
 
     public function edit(Game $game)
     {
-        $this->authorize('update', $game); // 🔐 sécurité
+        if ($game->user_id !== Auth::id()) {
+            abort(403);
+        }
 
         return view('games.edit', compact('game'));
     }
 
     public function update(Request $request, Game $game)
     {
-        $this->authorize('update', $game); // 🔐 sécurité
+        if ($game->user_id !== Auth::id()) {
+            abort(403);
+        }
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -64,7 +64,9 @@ class GameController extends Controller
 
     public function destroy(Game $game)
     {
-        $this->authorize('delete', $game); // 🔐 sécurité
+        if ($game->user_id !== Auth::id()) {
+            abort(403);
+        }
 
         $game->delete();
 
