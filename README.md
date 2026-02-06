@@ -1,5 +1,3 @@
-Parfait. Voici un **README propre, clair et présentable**, que tu peux **copier-coller tel quel** à la racine du projet (`README.md`).
-C’est exactement le niveau attendu pour un rendu scolaire.
 
 ---
 
